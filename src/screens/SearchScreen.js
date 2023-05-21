@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import Yelp from "../api/Yelp";
 import useResults from "../hooks/useResults";
@@ -13,8 +13,8 @@ const SearchScreen = () => {
     // price === '$' || '$$' || '$$$'
     return results.filter((results) => {
       return results.price === price;
-    })
-  }
+    });
+  };
 
   return (
     <View>
@@ -25,9 +25,20 @@ const SearchScreen = () => {
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
       <Text>We have found {results.length} results</Text>
-      <ResuletsList results={filterResultsByPrice('$')} title="Cost Effective" />
-      <ResuletsList results={filterResultsByPrice('$$')} title="Bit Pricier" />
-      <ResuletsList results={filterResultsByPrice('$$$')} title="Big Spender" />
+      <ScrollView>
+        <ResuletsList
+          results={filterResultsByPrice("$")}
+          title="Cost Effective"
+        />
+        <ResuletsList
+          results={filterResultsByPrice("$$")}
+          title="Bit Pricier"
+        />
+        <ResuletsList
+          results={filterResultsByPrice("$$$")}
+          title="Big Spender"
+        />
+      </ScrollView>
     </View>
   );
 };
